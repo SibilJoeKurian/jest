@@ -1,8 +1,8 @@
 const { TestScheduler } = require("jest");
 const { add, sub, checkOdd} = require('./calculator')
 const {getResponse}=require('./request')
-
-
+const {app}=require('./app')
+const request=require('supertest')
 test('add', () => {
     let result = add(2, 3)
     expect(result).toBe(5)
@@ -18,7 +18,8 @@ test('check Even',()=>{
 test('check odd',()=>{
     expect(checkOdd(3)).toBe('odd')
 })
-test('async test', async () => {
-   let result=await getResponse();
-   expect(result.status).toBe(200)
+
+test('testing app',async()=>{
+    await request(app).get('/check')
+    .expect(200)
 })
